@@ -7,9 +7,12 @@
 		<title>Basic Express Server</title>
 	</head>
 	<body>
-		<h1>Static Page</h1>
-		<button>Make Request</button>
-		<p class="message"></p>
+		<form action="/pokemon" method="POST">
+			<input type="text" placeholder="Name" />
+			<input type="text" placeholder="Type" />
+			<input type="submit" value="Add Pokemon" />
+		</form>
+		<h2>Pokemon</h2>
 		<script src="index.js"></script>
 	</body>
 </html>
