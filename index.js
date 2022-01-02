@@ -18,7 +18,12 @@ async function connectToDatabase() {
 
 connectToDatabase()
 
-app.use(express.static('client'))
+app.set('view enginer', 'ejs')
+app.use(express.static('public'))
+
+app.get('/', (req, res) => {
+	res.render('index.ejs')
+})
 
 app.get('/pokemon', (req, res) => {
 	const cursor = db.collection('Pokemon').find()
