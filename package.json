@@ -19,7 +19,9 @@
   },
   "homepage": "https://github.com/jayptl23/basic-express-server#readme",
   "dependencies": {
+    "dotenv": "^10.0.0",
     "express": "^4.17.2",
+    "mongodb": "^4.2.2",
     "nodemon": "^2.0.15"
   }
 }
