@@ -1,6 +1,22 @@
 const express = require('express')
 const app = express()
+const {MongoClient} = require('mongodb')
 require('dotenv').config()
+
+let db
+async function connectToDatabase() {
+	const client = new MongoClient(process.env.MONGO_URI)
+
+	try {
+		await client.connect()
+		console.log(`Connected to database!`)
+		db = client.db(process.env.DB_NAME)
+	} catch (error) {
+		console.error(error)
+	}
+}
+
+connectToDatabase()
 
 app.use(express.static('client'))
 
