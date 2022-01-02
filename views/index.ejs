@@ -13,6 +13,13 @@
 			<input type="submit" value="Add Pokemon" />
 		</form>
 		<h2>Pokemon</h2>
+		<ul class="pokemon">
+			<% for(let i = 0; i < pokemon.length; i++) { %>
+			<li>
+				<p><%=pokemon[i].name%> [<%=pokemon[i].type%>]</p>
+			</li>
+			<% } %>
+		</ul>
 		<script src="index.js"></script>
 	</body>
 </html>

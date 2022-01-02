@@ -22,14 +22,10 @@ app.set('view enginer', 'ejs')
 app.use(express.static('public'))
 
 app.get('/', (req, res) => {
-	res.render('index.ejs')
-})
-
-app.get('/pokemon', (req, res) => {
 	const cursor = db.collection('Pokemon').find()
 	cursor
 		.toArray()
-		.then(data => res.json({pokemon: data}))
+		.then(data => res.render('index.ejs', {pokemon: data}))
 		.catch(error => console.error(error))
 })
 
