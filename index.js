@@ -20,7 +20,13 @@ connectToDatabase()
 
 app.use(express.static('client'))
 
-app.get('/hello', (req, res) => res.json('Hello World!'))
+app.get('/pokemon', (req, res) => {
+	const cursor = db.collection('Pokemon').find()
+	cursor
+		.toArray()
+		.then(data => res.json({pokemon: data}))
+		.catch(error => console.error(error))
+})
 
 const PORT = process.env.PORT || 4000
 app.listen(PORT, () => console.log(`Server listening on port ${PORT}`))
