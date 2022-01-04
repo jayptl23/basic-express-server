@@ -18,14 +18,31 @@ async function connectToDatabase() {
 
 connectToDatabase()
 
-app.set('view enginer', 'ejs')
+app.set('view engine', 'ejs')
 app.use(express.static('public'))
+app.use(express.urlencoded({extended: true}))
+// app.use(express.json())
 
 app.get('/', (req, res) => {
 	const cursor = db.collection('Pokemon').find()
 	cursor
 		.toArray()
 		.then(data => res.render('index.ejs', {pokemon: data}))
+		.catch(error => console.error(error))
+})
+
+app.post('/addPokemon', (req, res) => {
+	const {name, type} = req.body
+	db.collection('Pokemon')
+		.insertOne({
+			name,
+			type,
+			likes: 0,
+		})
+		.then(result => {
+			console.log(result)
+			res.redirect('/')
+		})
 		.catch(error => console.error(error))
 })
 
