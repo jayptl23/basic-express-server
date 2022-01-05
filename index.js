@@ -21,10 +21,10 @@ connectToDatabase()
 app.set('view engine', 'ejs')
 app.use(express.static('public'))
 app.use(express.urlencoded({extended: true}))
-// app.use(express.json())
+app.use(express.json())
 
 app.get('/', (req, res) => {
-	const cursor = db.collection('Pokemon').find()
+	const cursor = db.collection('Pokemon').find().sort({likes: -1})
 	cursor
 		.toArray()
 		.then(data => res.render('index.ejs', {pokemon: data}))
@@ -42,6 +42,33 @@ app.post('/addPokemon', (req, res) => {
 		.then(result => {
 			console.log(result)
 			res.redirect('/')
+		})
+		.catch(error => console.error(error))
+})
+
+app.put('/incrementLikes', (req, res) => {
+	db.collection('Pokemon')
+		.updateOne(
+			{
+				name: req.body.name,
+			},
+			{
+				$inc: {likes: 1},
+			}
+		)
+		.then(result => {
+			console.log(result)
+			res.json('Incremented Likes by 1')
+		})
+		.catch(error => console.error(error))
+})
+
+app.delete('/deletePokemon', (req, res) => {
+	db.collection('Pokemon')
+		.deleteOne({name: req.body.name}, true)
+		.then(result => {
+			console.log(result)
+			res.json('Deleted Pokemon')
 		})
 		.catch(error => console.error(error))
 })
